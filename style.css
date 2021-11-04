@@ -1,0 +1,161 @@
+@font-face {
+    font-family: "SuperTux-Medium";
+    src: url(res/fonts/SuperTux-Medium.ttf);
+}
+:root {
+    --footer-size: 65px;
+}
+body {
+    overflow-x: hidden;
+    margin-bottom: var(--footer-size) !important;
+}
+table {
+    table-layout: fixed;
+    background-image: url("res/img/background.png");
+    background-repeat: no-repeat;
+    background-position: top center;
+    background-attachment: fixed;
+    background-size: 155%;
+}
+footer.fixed-bottom {
+    overflow-x: hidden;
+    padding: 0 !important;
+}
+footer .align-items-center {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    height: 40px;
+}
+label.labelForCheckbox {
+    margin-left: 4px !important;
+    user-select: none;
+}
+.modal-dialog {
+    max-width: 90% !important;
+}
+#descriptionModal .modal-body {
+    white-space: pre-wrap;
+}
+#customStartModal .modal-body .additional-options {
+    margin-top: 12px;
+}
+.modal-header, .modal-body, .modal-footer {
+    background-color: #e8f7f9;
+}
+.modal-open {
+    padding: 0 !important;
+    overflow-y: scroll !important;
+}
+.form-label {
+    cursor: text;
+}
+.form-check-input {
+    transition: 0.1s;
+}
+.top-div {
+    background-color: #caeffb;
+}
+.top-div img {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    width: 25%;
+    height: auto;
+}
+.release-table {
+    text-align: center;
+}
+.release-table tr {
+    overflow: hidden;
+    white-space: nowrap;
+}
+.release-table td {
+    vertical-align: middle;
+}
+.ver-name {
+    width: 120px;
+    font-size: 16px;
+    font-weight: bold;
+    font-family: SuperTux-Medium !important;
+    white-space: pre-wrap !important;
+}
+.ver-name, .ver-description {
+    color: #fff;
+    text-shadow:
+		-1px -1px 0 #000,
+		1px -1px 0 #000,
+		-1px 1px 0 #000,
+		1px 1px 0 #000;
+}
+.ver-description {
+    width: 250px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+}
+.ver-description-content {
+    margin-top: 4px;
+    margin-bottom: 6px;
+    padding-left: 4px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.modal-body .ver-description-content {
+    white-space: pre-wrap;
+    overflow: visible;
+}
+.ver-description .ver-click-info {
+    visibility: hidden;
+    font-size: 12px;
+    font-weight: bold;
+    margin: 0px;
+}
+.ver-play {
+    width: 42px;
+    font-family: SuperTux-Medium !important;
+    font-size: 12px;
+    padding-left: 10px !important;
+}
+.ver-play.ver-install {
+    padding-left: 15px !important;
+}
+.ver-dropdown {
+    width: 40px;
+}
+.dropdown-menu li {
+    cursor: pointer;
+}
+.release-btn {
+    font-size: 14px !important;
+}
+.release-btn:disabled {
+    cursor: not-allowed;
+    pointer-events: all !important;
+}
+.pre-release {
+    display: none;
+}
+.visible-pre-release {
+    display: table-row !important;
+}
+.fixed-bottom {
+    height: var(--footer-size);
+}
+.sys-info, .status-info {
+    font-size: 12px;
+}
+.status-info {
+    margin-bottom: 0;
+}
+.progress {
+    visibility: hidden;
+    width: 100px;
+    margin-top: 5px;
+    margin-left: 60px;
+}
+.no-transition {
+    transition: none !important;
+}
+.align-items-center {
+    display: flex !important;
+}

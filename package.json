@@ -1,0 +1,24 @@
+{
+  "name": "supertux-launcher",
+  "version": "1.0.0",
+  "description": "A simple and easy to use SuperTux launcher, featuring all versions of the game.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "keywords": [
+    "st",
+    "st-launcher",
+    "supertux",
+    "supertux-launcher"
+  ],
+  "author": "Vankata453",
+  "license": "GPL-3.0",
+  "devDependencies": {
+    "electron": "^15.1.0"
+  },
+  "dependencies": {
+    "is-online": "^9.0.1",
+    "wget-improved": "^3.2.1"
+  }
+}
