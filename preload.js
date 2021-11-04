@@ -213,7 +213,7 @@ contextBridge.exposeInMainWorld('stManagement',
                     fs.unlinkSync(currInstallerPath);
                 }
                 catch (err) {
-                    console.error(`Error deleting installer file, so it wason't deleted. Error: ${err}`);
+                    console.error(`Error deleting installer file, so it wasn't deleted. Error: ${err}`);
                     alert(`Error deleting installer file, so it wasn't deleted. Error: ${err}`);
                 }
             }
