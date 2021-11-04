@@ -5,9 +5,11 @@ The easiest way to enjoy the SuperTux versions you love! Made with ElectronJS.
 SuperTux Launcher is a SuperTux fan-made application, which allows players to install, launch and manage many different SuperTux versions on one (currently only 
 Windows) device.
 
+![Image of the launcher](https://user-images.githubusercontent.com/78196474/140398641-949c778b-3878-46d9-bc41-4a121cadfe73.png)
+
 It aims to allow playing older, as well as newer releases of the game simultaneously on one device and remove the need for reinstalling the game, when wanting to play another version.
 
-If you want to use SuperTux Launcher and/or help testing it, feel free to do so by downloading the current experimental release from the "Releases" tab!
+If you want to use SuperTux Launcher and/or help testing it, feel free to do so by downloading the latest experimental release from the "Releases" tab!
 
 ## Installing
 
