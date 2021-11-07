@@ -1,6 +1,6 @@
 {
   "name": "supertux-launcher",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "A simple and easy to use SuperTux launcher, featuring all versions of the game.",
   "main": "main.js",
   "scripts": {
