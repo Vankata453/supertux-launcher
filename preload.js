@@ -90,6 +90,9 @@ contextBridge.exposeInMainWorld('stManagement',
                 case "x86":
                     currUrl = url32Bit;
                     break;
+                case "ia32":
+                    currUrl = url32Bit;
+                    break;
                 default:
                     alert("Error downloading version: Couldn't identify OS architecture.");
                     return;
@@ -107,7 +110,8 @@ contextBridge.exposeInMainWorld('stManagement',
             currInstallerName = currUrlSplit[currUrlSplit.length - 2];
         }
         const currInstallerFormat = currInstallerName.substring(currInstallerName.length - 3).toUpperCase();
-        const currInstallerPath = `res\\installer_data\\${currInstallerName}`;
+        const currInstallerPath = `${__dirname}\\res\\installer_data\\${currInstallerName}`;
+        const currInstallerLogPath = `${__dirname}\\res\\installer_data\\st_latest_install.log`;
         const progressPercentage = document.getElementById("progressPercentage");
         const progressBar = document.getElementById("progressBar");
         const statusInfo = document.getElementById("statusInfo");
@@ -143,7 +147,7 @@ contextBridge.exposeInMainWorld('stManagement',
                 }
             }
             else if (currInstallerFormat == "MSI") {
-                installCommand = `msiexec /i \"${currInstallerPath}\" /qb! /l* \"res\\installer_data\\st_latest_install.log\" INSTALL_ROOT=\"%programfiles%\\SuperTux\\${versionName}\" TRANSFORMS=\"stmsimod.mst\"`;
+                installCommand = `msiexec /i \"${currInstallerPath}\" /qb! /l* \"${currInstallerLogPath}\" INSTALL_ROOT=\"%programfiles%\\SuperTux\\${versionName}\" TRANSFORMS=\"stmsimod.mst\"`;
             }
             //If the insatller isn't MSI or EXE:
             else {
