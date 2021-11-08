@@ -36,7 +36,7 @@ You may also want to run the program directly from source. Follow the instructio
 
 * [Electron](https://github.com/electron/electron) - the main module the launcher is mostly built on.
 
-* [Electron Forge](https://github.com/electron/electron) - used to build the setup executables.
+* [Electron Forge](https://github.com/electron-userland/electron-forge) - used to create the installation executables and make the launcher itself executable.
 
 * [Bootstrap](https://github.com/twbs/bootstrap) - used to help with modern front-end appearance in various ways.
 
