@@ -36,12 +36,16 @@ You may also want to run the program directly from source. Follow the instructio
 
 * [Electron](https://github.com/electron/electron) - the main module the launcher is mostly built on.
 
+* [Electron Forge](https://github.com/electron/electron) - used to build the setup executables.
+
 * [Bootstrap](https://github.com/twbs/bootstrap) - used to help with modern front-end appearance in various ways.
 
 * [wget-improved](https://github.com/bearjaws/node-wget) - used for GitHub download requests, since they use redirects.
 
 * [is-online](https://github.com/sindresorhus/is-online) - helps check if the machine is actually online, not if it has any active connections, 
 despite them not actually connecting you to the internet.
+
+All of these modules and scripts are licensed under the [MIT License](https://opensource.org/licenses/MIT). Check it for more details.
 
 ## Contribution
 
