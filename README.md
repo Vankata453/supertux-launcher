@@ -1,6 +1,6 @@
 # SuperTux Launcher
 
-The easiest way to enjoy the SuperTux versions you love! Made with ElectronJS.
+An easy way to enjoy the SuperTux versions you love! Made with ElectronJS.
 
 SuperTux Launcher is a SuperTux fan-made application, which allows players to install, launch and manage many different SuperTux versions on one (currently only 
 Windows) device.
