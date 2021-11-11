@@ -152,7 +152,7 @@ function configureDropdownElements() {
 }
 
 function confgureOtherElements() {
-    //Configure all rows in the release table to add a new dropdown to themselves when the event from preload.js is sent (after succesful version install).
+    //Configure all rows in the release table to add a new dropdown to themselves when the event from preload.js is fired (after succesful version install).
     var allReleaseTableRows = document.getElementById("release-table").getElementsByTagName("tr");
     for (releaseTableRow of allReleaseTableRows) {
         releaseTableRow.addEventListener("addDropdown", function() {
