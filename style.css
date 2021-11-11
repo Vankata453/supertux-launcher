@@ -39,6 +39,11 @@ label.labelForCheckbox {
 #customStartModal .modal-body .additional-options {
     margin-top: 12px;
 }
+#uninstallModal .modal-body .uninstall-notice {
+    display: inline-block;
+    padding-top: 15px;
+    font-weight: bold;
+}
 .modal-header, .modal-body, .modal-footer {
     background-color: #e8f7f9;
 }

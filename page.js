@@ -143,7 +143,9 @@ function configureDropdownElements() {
             else {
                 uninstallModal.querySelector("#modalBody").innerHTML = 
                     `Are you sure you want to uninstall ${fullVersionName}? 
-                    Keep in mind this will also uninstall any pre-releases and nightly builds you have installed that share the version name ${versionName}.`;
+                    Keep in mind this will also uninstall any pre-releases and nightly builds you have installed that share the version name ${versionName}.
+                    <p class="uninstall-notice">Uninstall is still under construction, so it may lead to some releases being uninstalled unexpectedly and others 
+                    still remaining installed! If needed, uninstall releases manually.</p>`;
             }
         });
         uninstallOption.setAttribute("data-bs-toggle", "modal");
