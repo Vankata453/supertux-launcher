@@ -190,22 +190,19 @@ contextBridge.exposeInMainWorld('stManagement',
                     button.innerHTML = "Install";
                     return;
                 }
-                //Code to execute on succesful installation.
+                //Code to execute on successful installation.
                 //Hide the progress bar and empty the status info.
                 progressBar.parentNode.style.visibility = null;
                 statusInfo.innerHTML = null;
-                //Revert button to "Install", because the action failed.
-                button.removeAttribute("disabled");
-                button.innerHTML = "Install";
-                //Because everything is succesful, make the button "Play!" and add it's dropdown.
-                const releaseId = button.parentNode.parentNode.id;
+                //Because everything is successful, make the button "Play!" and add it's dropdown.
                 button.classList.remove("btn-secondary");
                 button.classList.add("btn-success");
+                button.parentNode.classList.remove("ver-install");
                 button.removeAttribute("disabled");
                 button.innerHTML = "Play!";
-                addDropdown("", "btn-secondary", 
-                    [{name:"Custom start", class:"customStartOption"}, {divider:true}, {name:"Open installation's directory", action:"openInstallDir"},
-                    {name:"Open data directory", action:"openDataDir"}, {divider:true}, {name:"Uninstall", class:"uninstallOption"}], releaseId, true);
+                //Add a dropdown next to the "Play!" button by firing an event on the current release's row in page.js.
+                const releaseRow = button.parentNode.parentNode;
+                releaseRow.dispatchEvent(new Event("addDropdown"));
             });
         });
         download.on('error', function(err) {
@@ -271,15 +268,9 @@ contextBridge.exposeInMainWorld('stManagement',
         }
         //Execute the uninstall command.
         exec(uninstallCommand, (error, stderr) => {
-            if (error || stderr) {
-                if (error) {
-                    console.error(`Error uninstalling ${versionName}!\n${error.message}`);
-                    alert(`Error uninstalling ${versionName}!\n${error.message}`);
-                }
-                else if (stderr) {
-                    console.error(`Error uninstalling ${versionName}!\n${stderr}`);
-                    alert(`Error uninstalling ${versionName}!\n${stderr}`);
-                }
+            if (error) {
+                console.error(`Error uninstalling ${versionName}!\n${error.message}`);
+                alert(`Error uninstalling ${versionName}!\n${error.message}`);
                 //Revert button to "Play!" and show it's dropdown, because the action failed.
                 button.classList.remove("btn-secondary");
                 button.classList.add("btn-success");
@@ -288,7 +279,9 @@ contextBridge.exposeInMainWorld('stManagement',
                 releaseDropdown.style.visibility = null;
                 return;
             }
-            //If everything is succesful, make the button "Install" and remove it's dropdown.
+            //Print uninstall result in console. (Stderr doesn't only print errors, but output from this command in general.)
+            console.log(`Uninstall status: ${stderr}`);
+            //If everything is successful, make the button "Install" and remove it's dropdown.
             button.classList.remove("btn-secondary");
             button.classList.add("btn-primary");
             button.removeAttribute("disabled");

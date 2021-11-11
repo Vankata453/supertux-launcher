@@ -51,7 +51,9 @@ function configureButtons() {
                 //Add an additional class to the current button's cell.
                 currentCell.classList.add("ver-install");
                 //Add an additional cell to the current cell's row.
-                currentCell.parentNode.appendChild(document.createElement("td"));
+                const additionalCell = document.createElement("td");
+                additionalCell.classList.add("ver-dropdown");
+                currentCell.parentNode.appendChild(additionalCell);
                 //Change the button's style accordingly.
                 button.classList.remove("btn-secondary");
                 button.classList.add("btn-primary");
@@ -150,6 +152,18 @@ function configureDropdownElements() {
 }
 
 function confgureOtherElements() {
+    //Configure all rows in the release table to add a new dropdown to themselves when the event from preload.js is sent (after succesful version install).
+    var allReleaseTableRows = document.getElementById("release-table").getElementsByTagName("tr");
+    for (releaseTableRow of allReleaseTableRows) {
+        releaseTableRow.addEventListener("addDropdown", function() {
+            const releaseAdditionalCell = this.cells[this.cells.length - 1];
+            releaseAdditionalCell.remove();
+            addDropdown("", "btn-secondary", 
+                    [{name:"Custom start", class:"customStartOption"}, {divider:true}, {name:"Open installation's directory", action:"openInstallDir"},
+                    {name:"Open data directory", action:"openDataDir"}, {divider:true}, {name:"Uninstall", class:"uninstallOption"}], this.id, true);
+            configureDropdownElements();
+        });
+    }
     //Configure checkboxes to make them have focus when hovered.
     var allCheckboxes = document.getElementsByClassName("form-check-input");
     for (checkbox of allCheckboxes) {
