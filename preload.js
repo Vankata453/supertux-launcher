@@ -272,7 +272,12 @@ contextBridge.exposeInMainWorld('stManagement',
             }
         }
         //Add "Start-Process" and its attributes to the command to request elevated permissions, if they are needed.
-        if (useElevatedPermissions) uninstallCommand = `Start-Process cmd -WindowStyle Hidden -Verb RunAs {/C \"${uninstallCommand}\"}`;
+        if (useElevatedPermissions) {
+            uninstallCommand = `Start-Process cmd -WindowStyle Hidden -Verb RunAs {/C \"${uninstallCommand}\"}`;
+        }
+        else {
+            uninstallCommand = `& ${uninstallCommand}`;
+        }
         //Execute the uninstall command.
         exec(uninstallCommand, {'shell':'powershell.exe'}, (error, stderr) => {
             if (error) {
@@ -286,8 +291,6 @@ contextBridge.exposeInMainWorld('stManagement',
                 releaseDropdown.style.visibility = null;
                 return;
             }
-            //Print uninstall result in console. (Stderr doesn't only print errors, but output from this command in general.)
-            console.log(`Uninstall status: ${stderr}`);
             //If everything is successful, make the button "Install" and remove its dropdown.
             button.classList.remove("btn-secondary");
             button.classList.add("btn-primary");
