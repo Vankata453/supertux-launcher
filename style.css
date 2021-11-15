@@ -40,8 +40,10 @@ label.labelForCheckbox {
     margin-top: 12px;
 }
 #uninstallModal .modal-body .uninstall-notice {
-    padding-top: 15px;
-    font-weight: bold;
+    padding-top: 10px;
+}
+#uninstallModal .modal-body .uninstall-notice li {
+    padding-top: 8px;
 }
 .modal-header, .modal-body, .modal-footer {
     background-color: #e8f7f9;
