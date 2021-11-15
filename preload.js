@@ -257,6 +257,8 @@ contextBridge.exposeInMainWorld('stManagement',
     },
     uninstallVersion: (versionName, button) => {
         const releaseDropdown = document.getElementById(button.id.replace("Button", "Dropdown"));
+        //Get only first 5 characters (3 version fields, excluding dots) from the version's name, because more than three fields are not used in a release's "ProductVersion".
+        versionName = versionName.substring(0, 5);
         //Set the uninstall command for 0.4.x and above first.
         var uninstallCommand = `wmic product where \"name='SuperTux' and version='${versionName}'\" call uninstall`;
         var useElevatedPermissions = true;
