@@ -116,7 +116,7 @@ contextBridge.exposeInMainWorld('stManagement',
         const progressBar = document.getElementById("progressBar");
         const statusInfo = document.getElementById("statusInfo");
 
-        //Reset the progress bar and it's data and make it visible.
+        //Reset the progress bar and its data and make it visible.
         progressBar.classList.remove("bg-success");
         progressBar.classList.add("no-transition");
         progressBar.style.width = "0%";
@@ -194,7 +194,7 @@ contextBridge.exposeInMainWorld('stManagement',
                 //Hide the progress bar and empty the status info.
                 progressBar.parentNode.style.visibility = null;
                 statusInfo.innerHTML = null;
-                //Because everything is successful, make the button "Play!" and add it's dropdown.
+                //Because everything is successful, make the button "Play!".
                 button.classList.remove("btn-secondary");
                 button.classList.add("btn-success");
                 button.parentNode.classList.remove("ver-install");
@@ -257,21 +257,26 @@ contextBridge.exposeInMainWorld('stManagement',
     },
     uninstallVersion: (versionName, button) => {
         const releaseDropdown = document.getElementById(button.id.replace("Button", "Dropdown"));
-        //Set the uninstall command and change it according to the version, if needed.
+        //Set the uninstall command for 0.4.x and above first.
         var uninstallCommand = `wmic product where \"name='SuperTux' and version='${versionName}'\" call uninstall`;
+        var useElevatedPermissions = true;
+        //Change it to 0.3.x and below if needed.
         if (versionName.substring(0, 3) == "0.1" || versionName.substring(0, 3) == "0.3") {
+            useElevatedPermissions = false;
             uninstallCommand = `\"%programfiles%\\SuperTux\\${versionName}\\unins000.exe\"`;
+            //Add 0.3.3's NullSoft uninstaller exception.
+            if (versionName == "0.3.3") {
+                uninstallCommand = `\"%programfiles%\\SuperTux\\${versionName}\\Uninstall.exe\"`;
+            }
         }
-        //Add 0.3.3's NullSoft uninstaller exception.
-        if (versionName == "0.3.3") {
-            uninstallCommand = `\"%programfiles%\\SuperTux\\${versionName}\\Uninstall.exe\"`;
-        }
+        //Add "Start-Process" and its attributes to the command to request elevated permissions, if they are needed.
+        if (useElevatedPermissions) uninstallCommand = `Start-Process cmd -WindowStyle Hidden -Verb RunAs {/C \"${uninstallCommand}\"}`;
         //Execute the uninstall command.
-        exec(uninstallCommand, (error, stderr) => {
+        exec(uninstallCommand, {'shell':'powershell.exe'}, (error, stderr) => {
             if (error) {
                 console.error(`Error uninstalling ${versionName}!\n${error.message}`);
                 alert(`Error uninstalling ${versionName}!\n${error.message}`);
-                //Revert button to "Play!" and show it's dropdown, because the action failed.
+                //Revert button to "Play!" and show its dropdown, because the action failed.
                 button.classList.remove("btn-secondary");
                 button.classList.add("btn-success");
                 button.removeAttribute("disabled");
@@ -281,7 +286,7 @@ contextBridge.exposeInMainWorld('stManagement',
             }
             //Print uninstall result in console. (Stderr doesn't only print errors, but output from this command in general.)
             console.log(`Uninstall status: ${stderr}`);
-            //If everything is successful, make the button "Install" and remove it's dropdown.
+            //If everything is successful, make the button "Install" and remove its dropdown.
             button.classList.remove("btn-secondary");
             button.classList.add("btn-primary");
             button.removeAttribute("disabled");
