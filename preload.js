@@ -261,25 +261,18 @@ contextBridge.exposeInMainWorld('stManagement',
         versionName = versionName.substring(0, 5);
         //Set the uninstall command for 0.4.x and above first.
         var uninstallCommand = `wmic product where \"name='SuperTux' and version='${versionName}'\" call uninstall`;
-        var useElevatedPermissions = true;
         //Change it to 0.3.x and below if needed.
         if (versionName.substring(0, 3) == "0.1" || versionName.substring(0, 3) == "0.3") {
-            useElevatedPermissions = false;
             uninstallCommand = `\"%programfiles%\\SuperTux\\${versionName}\\unins000.exe\"`;
             //Add 0.3.3's NullSoft uninstaller exception.
             if (versionName == "0.3.3") {
                 uninstallCommand = `\"%programfiles%\\SuperTux\\${versionName}\\Uninstall.exe\"`;
             }
         }
-        //Add "Start-Process" and its attributes to the command to request elevated permissions, if they are needed.
-        if (useElevatedPermissions) {
-            uninstallCommand = `Start-Process cmd -WindowStyle Hidden -Verb RunAs {/C \"${uninstallCommand}\"}`;
-        }
-        else {
-            uninstallCommand = `& ${uninstallCommand}`;
-        }
+        //Add "Start-Process" and its attributes to the command to request elevated permissions.
+        uninstallCommand = `Start-Process cmd -WindowStyle Hidden -Verb RunAs {/C \"${uninstallCommand}\"}`;
         //Execute the uninstall command.
-        exec(uninstallCommand, {'shell':'powershell.exe'}, (error, stderr) => {
+        exec(uninstallCommand, {'shell':'powershell.exe'}, (error) => {
             if (error) {
                 console.error(`Error uninstalling ${versionName}!\n${error.message}`);
                 alert(`Error uninstalling ${versionName}!\n${error.message}`);
