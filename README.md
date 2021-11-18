@@ -49,7 +49,7 @@ despite them not actually connecting you to the internet.
 
 * [electron-wix-msi](https://github.com/felixrieseberg/electron-wix-msi) - uses the [WiX Toolset](https://github.com/wixtoolset) to create the MSI Windows installers.
 
-All of these modules and scripts are licensed under the [MIT License](https://opensource.org/licenses/MIT). Check it for more details.
+Unless mentioned otherwise, all of these modules and scripts are licensed under the [MIT License](https://opensource.org/licenses/MIT). Check it for more details.
 
 ## Contribution
 
