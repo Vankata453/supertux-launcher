@@ -45,7 +45,7 @@ despite them not actually connecting you to the internet.
 
 ### Creating installers
 
-* [Electron Packager](https://github.com/electron/electron-packager) - used to package the launcher to an executable as a preparation for creating the installers.
+* [Electron Packager](https://github.com/electron/electron-packager)(under the [BSD 2-Clause "Simplified" License](https://github.com/electron/electron-packager/blob/main/LICENSE)) - used to package the launcher to an executable as a preparation for creating the installers.
 
 * [electron-wix-msi](https://github.com/felixrieseberg/electron-wix-msi) - uses the [WiX Toolset](https://github.com/wixtoolset) to create the MSI Windows installers.
 
