@@ -140,10 +140,10 @@ contextBridge.exposeInMainWorld('stManagement',
             //Create install command variable, set them according to the file if needed and install the version.
             var installCommand = null;
             if (currInstallerFormat == "EXE") {
-                installCommand = `${currInstallerPath} /DIR=\"%programfiles%\\SuperTux\\${versionName}\" /SILENT /NORESTART /ALLUSERS`;
+                installCommand = `\"${currInstallerPath}\" /DIR=\"%programfiles%\\SuperTux\\${versionName}\" /SILENT /NORESTART /ALLUSERS`;
                 //Add 0.3.3's NullSoft installer exception.
                 if (versionName.includes("0.3.3")) {
-                    installCommand = `${currInstallerPath} /S /D=%programfiles%\\SuperTux\\${versionName}`
+                    installCommand = `\"${currInstallerPath}\" /S /D=%programfiles%\\SuperTux\\${versionName}`
                 }
             }
             else if (currInstallerFormat == "MSI") {
