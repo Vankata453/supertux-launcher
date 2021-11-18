@@ -1,8 +1,8 @@
 const { MSICreator } = require('electron-wix-msi');
 const path = require('path');
 
-const APP_DIR = path.resolve(__dirname, './SuperTux Launcher-win32-ia32'); 
-const OUT_DIR = path.resolve(__dirname, './windows_installer_x86');
+const APP_DIR = path.resolve(__dirname, '../SuperTux Launcher-win32-ia32'); 
+const OUT_DIR = path.resolve(__dirname, '../windows_installer_x86');
 
 const msiCreator = new MSICreator({
     appDirectory: APP_DIR,
@@ -13,15 +13,15 @@ const msiCreator = new MSICreator({
     manufacturer: 'Vankata453',
     version: '0.1.0',
 	arch: 'x86',
-	appIconPath: 'res\\supertux.ico',
+	appIconPath: path.resolve(__dirname, '../res/supertux.ico'),
 	
     ui: {
         chooseDirectory: true,
 		images: {
-			background: path.resolve(__dirname, './res/wix_installer_images/installer_dialog.bmp'),
-			banner: path.resolve(__dirname, './res/wix_installer_images/installer_banner.bmp'),
-			exclamationIcon: path.resolve(__dirname, './res/supertux.ico'),
-			infoIcon: path.resolve(__dirname, './res/supertux.ico')
+			background: path.resolve(__dirname, '../res/wix_installer_images/installer_dialog.bmp'),
+			banner: path.resolve(__dirname, '../res/wix_installer_images/installer_banner.bmp'),
+			exclamationIcon: path.resolve(__dirname, '../res/supertux.ico'),
+			infoIcon: path.resolve(__dirname, '../res/supertux.ico')
 		}
     },
 });
