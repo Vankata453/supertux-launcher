@@ -1,7 +1,5 @@
 # SuperTux Launcher
 
-An easy way to enjoy the SuperTux versions you love! Made with ElectronJS.
-
 SuperTux Launcher is a SuperTux fan-made application, which allows players to install, launch and manage many different SuperTux versions on one (currently only 
 Windows) device.
 
@@ -34,9 +32,9 @@ You may also want to run the program directly from source. Follow the instructio
 
 ## Credits
 
-* [Electron](https://github.com/electron/electron) - the main module the launcher is mostly built on.
+### Launcher
 
-* [Electron Forge](https://github.com/electron-userland/electron-forge) - used to create the installation executables and make the launcher itself executable.
+* [Electron](https://github.com/electron/electron) - the main module the launcher is mostly built on.
 
 * [Bootstrap](https://github.com/twbs/bootstrap) - used to help with modern front-end appearance in various ways.
 
@@ -44,6 +42,12 @@ You may also want to run the program directly from source. Follow the instructio
 
 * [is-online](https://github.com/sindresorhus/is-online) - helps check if the machine is actually online, not if it has any active connections, 
 despite them not actually connecting you to the internet.
+
+### Creating installers
+
+* [Electron Packager](https://github.com/electron/electron-packager) - used to package the launcher to an executable as a preparation for creating the installers.
+
+* [electron-wix-msi](https://github.com/felixrieseberg/electron-wix-msi) - uses the [WiX Toolset](https://github.com/wixtoolset) to create the MSI Windows installers.
 
 All of these modules and scripts are licensed under the [MIT License](https://opensource.org/licenses/MIT). Check it for more details.
 
