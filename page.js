@@ -142,8 +142,7 @@ function configureDropdownElements() {
             }
             else {
                 uninstallModal.querySelector("#modalBody").innerHTML = 
-                    `Are you sure you want to uninstall ${fullVersionName}?
-                    Keep in mind:
+                    `Are you sure you want to uninstall ${fullVersionName}? Keep in mind:
                     <ul class="uninstall-notice">
                       <li>The release will keep uninstalling in the background.</li>
                       <li>This process will also uninstall any pre-releases and nightly builds you have installed that share the version name ${versionName}.</li>
