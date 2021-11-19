@@ -9,7 +9,7 @@ function createWindow() {
       maximizable: false,
       resizable: false,
       autoHideMenuBar: true,
-      icon: `${__dirname}/res/supertux.ico`,
+      icon: path.join(__dirname, 'res', 'supertux.ico'),
       webPreferences: {
         contextIsolation: true,
         enableRemoteModule: false,
