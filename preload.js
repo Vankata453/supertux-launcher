@@ -191,6 +191,20 @@ contextBridge.exposeInMainWorld('stManagement',
                     return;
                 }
                 //Code to execute on successful installation.
+                //Check if the installer exists (incase) and delete it if it does. Display errors otherwise.
+                if (fs.existsSync(currInstallerPath)) {
+                    try {
+                        fs.unlinkSync(currInstallerPath);
+                    }
+                    catch (err) {
+                        console.error(`Error deleting installer file, so it wasn't deleted. Error: ${err}`);
+                        alert(`Error deleting installer file, so it wasn't deleted. Error: ${err}`);
+                    }
+                }
+                else {
+                    console.error("Error finding installer file, so it won't be deleted.");
+                    alert("Error finding installer file, so it won't be deleted.");
+                }
                 //Hide the progress bar and empty the status info.
                 progressBar.parentNode.style.visibility = null;
                 statusInfo.innerHTML = null;
@@ -208,7 +222,7 @@ contextBridge.exposeInMainWorld('stManagement',
         download.on('error', function(err) {
             console.error(`Error downloading version! ${err}`);
             alert(`Error downloading version! ${err}`);
-            //Check if the installer exists (incase) and delete it. Display errrs otherwise.
+            //Check if the installer exists (incase) and delete it if it does. Display errors otherwise.
             if (fs.existsSync(currInstallerPath)) {
                 try {
                     fs.unlinkSync(currInstallerPath);
