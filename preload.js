@@ -271,10 +271,10 @@ contextBridge.exposeInMainWorld('stManagement',
     },
     uninstallVersion: (versionName, button) => {
         const releaseDropdown = document.getElementById(button.id.replace("Button", "Dropdown"));
-        //Get only first 5 characters (3 version fields, excluding dots) from the version's name, because more than three fields are not used in a release's "ProductVersion".
-        versionName = versionName.substring(0, 5);
+        //Get only first 5 characters (3 version fields, excluding dots) from the version's name, because more than three fields are not used in a release's ProductVersion.
+        const productVersion = versionName.substring(0, 5);
         //Set the uninstall command for 0.4.x and above first.
-        var uninstallCommand = `wmic product where \"name='SuperTux' and version='${versionName}'\" call uninstall`;
+        var uninstallCommand = `wmic product where \"name='SuperTux' and version='${productVersion}'\" call uninstall`;
         //Change it to 0.3.x and below if needed.
         if (versionName.substring(0, 3) == "0.1" || versionName.substring(0, 3) == "0.3") {
             uninstallCommand = `\"%programfiles%\\SuperTux\\${versionName}\\unins000.exe\"`;
