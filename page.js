@@ -141,11 +141,13 @@ function configureDropdownElements() {
                 uninstallModal.querySelector("#modalBody").innerHTML = `Are you sure you want to uninstall ${fullVersionName}?`;
             }
             else {
+                //Get only first 5 characters (3 version fields, excluding dots) from the version's name, because more than three fields are not used in a release's ProductVersion.
+                const productVersion = versionName.substring(0, 5);
                 uninstallModal.querySelector("#modalBody").innerHTML = 
                     `Are you sure you want to uninstall ${fullVersionName}? Keep in mind:
                     <ul class="uninstall-notice">
                       <li>The release will keep uninstalling in the background.</li>
-                      <li>This process will also uninstall any pre-releases and nightly builds you have installed that share the version name ${versionName}.</li>
+                      <li>This process will also uninstall any pre-releases and nightly builds you have installed that share the version name ${productVersion}.</li>
                     </ul>
                     <p class="uninstall-notice fw-bold">Uninstall is still under construction, so it's possible for some releases to get uninstalled unexpectedly and/or 
                     some to remain installed! If needed, uninstall releases manually.</p>`;
