@@ -26,6 +26,9 @@ const msiCreator = new MSICreator({
     },
 });
 
+//Remove "Machine - MSI" from the ProductName.
+msiCreator.wixTemplate = msiCreator.wixTemplate.replace('Name = "{{ApplicationName}} (Machine - MSI)"','Name = "{{ApplicationName}}"');
+
 msiCreator.create().then(function() {
     msiCreator.compile();
 });
