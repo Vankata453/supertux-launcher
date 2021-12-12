@@ -9,6 +9,9 @@ body {
     overflow-x: hidden;
     margin-bottom: var(--footer-size) !important;
 }
+body::-webkit-scrollbar {
+    display: none;
+}
 table {
     table-layout: fixed;
     background-image: url("res/img/background.png");
@@ -123,7 +126,7 @@ label.labelForCheckbox {
     padding-left: 10px !important;
 }
 .ver-play.ver-install {
-    padding-left: 15px !important;
+    padding-left: 16px !important;
 }
 .ver-dropdown {
     width: 40px;
@@ -149,6 +152,7 @@ label.labelForCheckbox {
 }
 .launcher-options ul {
     position: fixed !important;
+    transform: translate3d(300px, -60px, 0px) !important;
 }
 .sys-info, .status-info {
     font-size: 12px;
