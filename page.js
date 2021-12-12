@@ -2,7 +2,7 @@ function initialPageConfiguration() {
     configureButtons();
     configureDescriptions();
     configureDropdownElements();
-    configurePreReleases();
+    configureLauncherOptions();
     confgureOtherElements();
 }
 
@@ -227,8 +227,8 @@ function confgureOtherElements() {
     });
 }
 
-function configurePreReleases() {
-    document.getElementById("preReleasesBtn").addEventListener("click", function() {
+function configureLauncherOptions() {
+    document.getElementById("preReleasesToggle").addEventListener("click", function() {
         const preReleases = document.getElementsByClassName("pre-release");
         const preReleasesVisible = document.getElementsByClassName("visible-pre-release").length !== 0;
         if (preReleasesVisible) {

@@ -147,6 +147,9 @@ label.labelForCheckbox {
 .fixed-bottom {
     height: var(--footer-size);
 }
+.launcher-options ul {
+    position: fixed !important;
+}
 .sys-info, .status-info {
     font-size: 12px;
 }

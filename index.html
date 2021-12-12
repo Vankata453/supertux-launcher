@@ -79,7 +79,13 @@
           <p class="sys-info" id="sysInfo">System info: </p>
         </div>
         <div class="col-sm-4">
-          <button type="button" class="btn btn-secondary" id="preReleasesBtn">Show pre-releases</button>
+          <div class="launcher-options dropup">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="launcherOptions" data-bs-toggle="dropdown" aria-expanded="false">Options</button>
+            <ul class="dropdown-menu" aria-labelledby="launcherOptions">
+              <li><a class="dropdown-item" id="preReleasesToggle">Show pre-releases</a></li>
+              <li><a class="dropdown-item" id="installNightly">Install a Nightly release</a></li>
+            </ul>
+          </div>
         </div>
         <div class="col-sm-4">
           <p class="status-info" id="statusInfo"></p>
