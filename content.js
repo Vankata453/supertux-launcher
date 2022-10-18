@@ -22,33 +22,30 @@ window.addEventListener('DOMContentLoaded', function() {
             .then(response => {
                 //Ensure current IP is not being rate limited by GitHub.
                 if (response.message == undefined) {
-                    //Temporary array to manipulate JSON for organizing and adding values later on.
-                    var lastVersions = response.slice(-3);
-                    //Reverse current last versions to organize them.
-                    lastVersions.reverse();
-                    //Add additional SuperTux versions at the end and modify existing ones' data.
-                    for (var i = 0; i < lastVersions.length; i++) {
-                        const currVersionName = lastVersions[i].name;
-                        if (currVersionName.includes("0.1.3")) {
-                            lastVersions[i].published_at = "2005-06-09";
+                    //Clear local storage.
+                    localStorage.clear();
+                    //Modify existing versions' data.
+                    for (version of response) {
+                        if (version.name.includes("0.1.3")) {
+                            version.published_at = "2005-06-09";
                         }
-                        else if (currVersionName.includes("0.3.3")) {
-                            lastVersions[i].published_at = "2010-02-26";
+                        else if (version.name.includes("0.3.3")) {
+                            version.published_at = "2010-02-26";
                         }
-                        else if (currVersionName.includes("0.3.4")) {
-                            lastVersions[i].published_at = "2013-07-08";
+                        else if (version.name.includes("0.3.4")) {
+                            version.published_at = "2013-07-08";
                         }
                     }
                     const OGDescription = "A jump-and-run game starring Tux the Penguin. (Now lives at http://supertux.lethargik.org/)";
-                    lastVersions.splice(2, 0, {"name":"SuperTux 0.3.0", "published_at":"2006-12-17", "body":OGDescription,
+                    response.push({"name":"SuperTux 0.3.0", "published_at":"2006-12-17", "body":OGDescription,
                         "assets":[{"name":"supertux-0.3.0-win32.exe", "browser_download_url":"https://sourceforge.net/projects/super-tux/files/supertux/0.3.0/supertux-0.3.0-win32-setup.exe/download"}]});
-                    lastVersions.push({"name":"SuperTux 0.1.2", "published_at":"2004-08-25", "body":OGDescription,
+                    response.push({"name":"SuperTux 0.1.2", "published_at":"2004-08-25", "body":OGDescription,
                         "assets":[{"name":"supertux-0.1.2-setup.exe", "browser_download_url":"https://sourceforge.net/projects/super-tux/files/supertux/0.1.2/supertux-0.1.2-setup.exe/download"}]});
-                    lastVersions.push({"name":"SuperTux 0.1.1", "published_at":"2004-05-11", "body":OGDescription,
+                    response.push({"name":"SuperTux 0.1.1", "published_at":"2004-05-11", "body":OGDescription,
                         "assets":[{"name":"supertux-0.1.1-setup.exe", "browser_download_url":"https://sourceforge.net/projects/super-tux/files/supertux/0.1.1/supertux-0.1.1-setup.exe/download"}]});
-                    //Remove other last versions and put organized and additional ones on their place.
-                    response.splice(-3);
-                    response = response.concat(lastVersions);
+                    // Sort versions by release date.
+                    response.map((version) => version.published_at = new Date(version.published_at));
+                    response.sort((a, b) => b.published_at - a.published_at);
 
                     for (var i = 0; i < response.length; i++) {
                         var currRelease = response[i];
@@ -73,7 +70,7 @@ window.addEventListener('DOMContentLoaded', function() {
                             }
                         }
 
-                        localStorage.setItem("rel" + (i + 1), new Array(currReleaseName, new Date(Date.parse(currRelease.published_at)).toLocaleDateString(), currRelease.body,
+                        localStorage.setItem("rel" + (i + 1), new Array(currReleaseName, currRelease.published_at.toLocaleDateString(), currRelease.body,
                             currReleaseDownloads, currRelease.prerelease).join("-|||-"));
                     }
                     printReleases();
