@@ -1,3 +1,4 @@
+.vscode
 node_modules
 !res/installer_data
 res/installer_data/*

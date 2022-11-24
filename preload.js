@@ -315,6 +315,9 @@ contextBridge.exposeInMainWorld('stManagement',
         }
     },
     uninstallVersion: (versionName, button) => {
+        //Define constant variables.
+        const releaseDropdown = document.getElementById(button.id.replace("Button", "Dropdown"));
+
         //Define the uninstall command.
         const uninstallCommand = `cd %programfiles%\\SuperTux && rmdir /S /Q \"${versionName}\"`;
 
