@@ -163,7 +163,7 @@ contextBridge.exposeInMainWorld('stManagement',
             else if (currInstallerFormat == "MSI") {
                 installCommand = `msiexec /i \"${currInstallerPath}\" /qb! /l* \"${currInstallerLogPath}\" INSTALL_ROOT=\"%programfiles%\\SuperTux\\${versionName}\" TRANSFORMS=\"stmsimod.mst\"`;
             }
-            //If the insatller isn't MSI or EXE:
+            //If the installer isn't MSI or EXE:
             else {
                 alert("Error installing version: Couldn't identify installer file format.");
                 //Revert button to "Install", because the action failed.
@@ -258,6 +258,37 @@ contextBridge.exposeInMainWorld('stManagement',
             button.innerHTML = "Install";
         });
     },
+    installNightly: (installerPath) => {
+      //Get the last part of the installer path.
+      const pathSplit = installerPath.split("\\");
+      const installerName = pathSplit[pathSplit.length - 1];
+      const installName = installerName.substring(0, installerName.lastIndexOf("."));
+
+      //Define the data path for the install.
+      const currInstallerDataPath = `${__dirname}\\res\\installer_data`;
+
+      //Execute the install command.
+      exec(`cd ${currInstallerDataPath} && msiexec /i \"${installerPath}\" /qb! /l* \"st_latest_install.log\" INSTALL_ROOT=\"%programfiles%\\SuperTux\\${installName}\" TRANSFORMS=\"stmsimod.mst\"`, (error, stderr) => {
+        if (error || stderr) {
+            if (error) {
+                console.error(`Error installing Nightly build!\n${error.message}`);
+                alert(`Error installing nightly Nuild!\n${error.message}`);
+                return;
+            }
+            else if (stderr) {
+                console.error(`Error installing Nightly build!\n${stderr}`);
+                alert(`Error installing Nightly build!\n${stderr}`);
+                return;
+            }
+        }
+        //Code to execute on successful installation.
+        //Add the Nightly release information to localStorage for printing.
+        const timestamp = Date.now();
+        localStorage.setItem(`nightly-${timestamp}-${installName}`, new Array(installName,
+            new Date(timestamp).toLocaleDateString(), "", [], true).join("-|||-"));
+        window.location.reload();
+    });
+    },
     openInstallDir: (versionName) => {
         exec(`explorer %programfiles%\\SuperTux\\${versionName}`);
     },
@@ -284,23 +315,11 @@ contextBridge.exposeInMainWorld('stManagement',
         }
     },
     uninstallVersion: (versionName, button) => {
-        const releaseDropdown = document.getElementById(button.id.replace("Button", "Dropdown"));
-        //Get only first 5 characters (3 version fields, excluding dots) from the version's name, because more than three fields are not used in a release's ProductVersion.
-        const productVersion = versionName.substring(0, 5);
-        //Set the uninstall command for 0.4.x and above first.
-        var uninstallCommand = `wmic product where \"name='SuperTux' and version='${productVersion}'\" call uninstall`;
-        //Change it to 0.3.x and below if needed.
-        if (versionName.substring(0, 3) == "0.1" || versionName.substring(0, 3) == "0.3") {
-            uninstallCommand = `\"%programfiles%\\SuperTux\\${versionName}\\unins000.exe\"`;
-            //Add 0.3.3's NullSoft uninstaller exception.
-            if (versionName == "0.3.3") {
-                uninstallCommand = `\"%programfiles%\\SuperTux\\${versionName}\\Uninstall.exe\"`;
-            }
-        }
-        //Add "Start-Process" and its attributes to the command to request elevated permissions.
-        uninstallCommand = `Start-Process cmd -WindowStyle Hidden -Verb RunAs {/C \"${uninstallCommand}\"}`;
+        //Define the uninstall command.
+        const uninstallCommand = `cd %programfiles%\\SuperTux && rmdir /S /Q \"${versionName}\"`;
+
         //Execute the uninstall command.
-        exec(uninstallCommand, {'shell':'powershell.exe'}, (error) => {
+        exec(`Start-Process cmd -WindowStyle Hidden -Verb RunAs {/C \"${uninstallCommand}\"}`, {'shell':'powershell.exe'}, (error) => {
             if (error) {
                 console.error(`Error uninstalling ${versionName}!\n${error.message}`);
                 alert(`Error uninstalling ${versionName}!\n${error.message}`);
@@ -319,6 +338,16 @@ contextBridge.exposeInMainWorld('stManagement',
             button.innerHTML = "Install";
             button.parentNode.classList.add("ver-install");
             releaseDropdown.remove();
+
+            //Incase the release was a Nightly build, remove it from localStorage.
+            for (let i = 1; i <= localStorage.length; i++) {
+              const key = localStorage.key(i);
+              if (key && key.startsWith("nightly") && key.endsWith(versionName)) {
+                localStorage.removeItem(key);
+                window.location.reload();
+                break;
+              }
+            }
         });
     }
 });

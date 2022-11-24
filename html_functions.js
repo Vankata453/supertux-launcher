@@ -32,7 +32,7 @@ function addElement(text, classToSet, newCell) {
     }
 }
 
-function addButton(text, cellClassToSet, classToSet, idToSet, setDisabled) {
+function addButton(text, cellClassToSet, classToSet, idToSet, setDisabled = false, type = "secondary") {
     const cell = document.createElement("td");
     cell.className = cellClassToSet;
 
@@ -44,12 +44,14 @@ function addButton(text, cellClassToSet, classToSet, idToSet, setDisabled) {
         button.classList.add("btn", "btn-danger", classToSet);
     }
     else {
-        button.classList.add("btn", "btn-secondary", "btn-lg", classToSet);
+        button.classList.add("btn", `btn-${type}`, "btn-lg", classToSet);
     }
     if (idToSet != null) button.id = idToSet;
     
     cell.appendChild(button);
     currRow.appendChild(cell);
+
+    return button;
 }
 
 function addDropdown(text, buttonClass, elements, releaseId, buttonSmall) {

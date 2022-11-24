@@ -56,10 +56,10 @@ label.labelForCheckbox {
 #customStartModal .modal-body .additional-options {
     margin-top: 12px;
 }
-#uninstallModal .modal-body .uninstall-notice {
+.modal-body .notice {
     padding-top: 10px;
 }
-#uninstallModal .modal-body .uninstall-notice li {
+.modal-body .notice li {
     padding-top: 8px;
 }
 .modal-header, .modal-body, .modal-footer {
@@ -104,10 +104,10 @@ label.labelForCheckbox {
 .ver-name, .ver-description {
     color: #fff;
     text-shadow:
-		-1px -1px 0 #000,
-		1px -1px 0 #000,
-		-1px 1px 0 #000,
-		1px 1px 0 #000;
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
 }
 .ver-description {
     width: 250px;

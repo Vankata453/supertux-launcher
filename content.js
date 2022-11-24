@@ -22,8 +22,11 @@ window.addEventListener('DOMContentLoaded', function() {
             .then(response => {
                 //Ensure current IP is not being rate limited by GitHub.
                 if (response.message == undefined) {
-                    //Clear local storage.
-                    localStorage.clear();
+                    //Remove all cached non-Nightly releases from localStorage.
+                    for (let i = 1; i <= localStorage.length; i++) {
+                      const key = localStorage.key(i);
+                      if (key && key.startsWith("rel")) localStorage.removeItem(key);
+                    }
                     //Modify existing versions' data.
                     for (version of response) {
                         if (version.name.includes("0.1.3")) {
@@ -93,14 +96,30 @@ window.addEventListener('DOMContentLoaded', function() {
 });
 
 function printReleases() {
-    for (var i = 1; i <= localStorage.length; i++) {
-        var currRelease = localStorage.getItem("rel" + i).split("-|||-");
+    const sortedNightlies = Object.keys(localStorage).filter((key) => key.startsWith("nightly"))
+      .sort(function(a, b) {
+        return b.localeCompare(a, undefined, {
+          numeric: true,
+          sensitivity: 'base'
+        });
+      });
+    const sortedReleases = Object.keys(localStorage).filter((key) => key.startsWith("rel"))
+      .sort(function(a, b) {
+        return a.localeCompare(b, undefined, {
+          numeric: true,
+          sensitivity: 'base'
+        });
+      });
+    const sortedKeys = [...sortedNightlies, ...sortedReleases];
+    for (key of sortedKeys) {
+        var currRelease = localStorage.getItem(key).split("-|||-");
         const isPreRelease = currRelease[4];
+        const isNightly = key.startsWith("nightly");
         if (isPreRelease != undefined) {
-            newRow(`rel${i}`, isPreRelease);
+            newRow(key, isPreRelease);
         }
         else {
-            newRow(`rel${i}`);
+            newRow(key);
         }
         for (var y = 0; y < currRelease.length - 1; y++) {
             var classToSet = null;
@@ -121,8 +140,9 @@ function printReleases() {
                     break;
                 case 3:
                     classToSet = "ver-play";
-                    if (currRelease[3].length > 0) {
-                        addButton("Loading...", classToSet, "release-btn", `rel${i}Button`, false);
+                    if (currRelease[3].length > 0 || isNightly) {
+                        let button = addButton("Loading...", classToSet, "release-btn", `${key}Button`, false);
+                        button.setAttribute("isNightly", isNightly ? "true" : "false");
                     }
                     else {
                         addButton("Not<br>available", classToSet, "release-btn", null, true);

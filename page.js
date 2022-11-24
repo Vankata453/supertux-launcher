@@ -53,7 +53,7 @@ function configureButtons() {
             if (window.stManagement.checkForVersion(versionName)) {
                 //Change the button's style accordingly.
                 button.classList.remove("btn-secondary");
-                button.classList.add("btn-success");
+                button.classList.add(button.getAttribute("isNightly") == "true" ? "btn-warning" : "btn-success");
                 button.innerHTML = "Play!";
                 //Add a dropdown for additional options.
                 addDropdown("", "btn-secondary", 
@@ -151,21 +151,13 @@ function configureDropdownElements() {
             uninstallModal.setAttribute("stReleaseId", releaseId);
             uninstallModal.setAttribute("stVersion", versionName);
             uninstallModal.querySelector("#modalTitle").innerHTML = `Uninstall ${fullVersionName}`;
-            if (versionName.substring(0, 3) == "0.1" || versionName.substring(0, 3) == "0.3") {
-                uninstallModal.querySelector("#modalBody").innerHTML = `Are you sure you want to uninstall ${fullVersionName}?`;
-            }
-            else {
-                //Get only first 5 characters (3 version fields, excluding dots) from the version's name, because more than three fields are not used in a release's ProductVersion.
-                const productVersion = versionName.substring(0, 5);
-                uninstallModal.querySelector("#modalBody").innerHTML = 
-                    `Are you sure you want to uninstall ${fullVersionName}? Keep in mind:
-                    <ul class="uninstall-notice">
-                      <li>The release will keep uninstalling in the background.</li>
-                      <li>This process will also uninstall any pre-releases and nightly builds you have installed that share the version name ${productVersion}.</li>
-                    </ul>
-                    <p class="uninstall-notice fw-bold">Uninstall is still under construction, so it's possible for some releases to get uninstalled unexpectedly and/or 
-                    some to remain installed! If needed, uninstall releases manually.</p>`;
-            }
+            uninstallModal.querySelector("#modalBody").innerHTML = 
+                `Are you sure you want to uninstall ${fullVersionName}? Keep in mind:
+                <ul class="notice">
+                  <li>The release will keep uninstalling in the background.</li>
+                  <li>Only the folder where the release is installed will be removed. The application entry in the system
+                    wouldn't be used to prevent uninstalling wrong versions.
+                </ul>`;
         });
         uninstallOption.setAttribute("data-bs-toggle", "modal");
         uninstallOption.setAttribute("data-bs-target", "#uninstallModal");
@@ -239,6 +231,12 @@ function confgureOtherElements() {
         //Uninstall the version by sending it's name and release button.
         window.stManagement.uninstallVersion(currVersionName, releaseButton);
     });
+    //Make the "Install" Nightly button functional.
+    document.getElementById("installNightly").addEventListener("click", function() {
+      const installerFile = document.getElementById("nightlyInstallerImport").files[0];
+      if (!installerFile) return console.error("Nightly build installer file not selected.");
+      window.stManagement.installNightly(installerFile.path);
+  });
 }
 
 function configureLauncherOptions() {
