@@ -124,8 +124,9 @@ contextBridge.exposeInMainWorld('stManagement',
             currInstallerName = currUrlSplit[currUrlSplit.length - 2];
         }
         const currInstallerFormat = currInstallerName.substring(currInstallerName.length - 3).toUpperCase();
-        const currInstallerPath = `${__dirname}\\res\\installer_data\\${currInstallerName}`;
-        const currInstallerLogPath = `${__dirname}\\res\\installer_data\\st_latest_install.log`;
+        const currInstallerDir = `${process.env.APPDATA}\\SuperTux Launcher\\installers`;
+        const currInstallerPath = `${currInstallerDir}\\${currInstallerName}`;
+        const currInstallerDataPath = `${__dirname}\\res\\installer_data`;
         const progressPercentage = document.getElementById("progressPercentage");
         const progressBar = document.getElementById("progressBar");
         const statusInfo = document.getElementById("statusInfo");
@@ -140,8 +141,19 @@ contextBridge.exposeInMainWorld('stManagement',
         progressPercentage.innerHTML = "0%";
         statusInfo.innerHTML = "Downloading release...";
 
+        //Create installers directory, if it doesn't exist.
+        if (!fs.existsSync(currInstallerDir)) {
+          try {
+              fs.mkdirSync(currInstallerDir, { recursive: true });
+          }
+          catch (err) {
+              console.error(`Error creating folder for installers. Error: ${err}`);
+              alert(`Error creating folder for installers. Error: ${err}`);
+          }
+        }
+
         //Download installer.
-        var download = wget.download(currUrl, `${__dirname}/res/installer_data/${currInstallerName}`);
+        var download = wget.download(currUrl, currInstallerPath);
         download.on('progress', function(progress) {
             progressPercentage.innerHTML = `${Math.floor(progress * 100)}%`
             progressBar.style.width = `${(progress * 100).toFixed(1)}%`;
@@ -161,7 +173,7 @@ contextBridge.exposeInMainWorld('stManagement',
                 }
             }
             else if (currInstallerFormat == "MSI") {
-                installCommand = `msiexec /i \"${currInstallerPath}\" /qb! /l* \"${currInstallerLogPath}\" INSTALL_ROOT=\"%programfiles%\\SuperTux\\${versionName}\" TRANSFORMS=\"stmsimod.mst\"`;
+                installCommand = `cd ${currInstallerDataPath} && msiexec /i \"${currInstallerPath}\" /qb! /l* \"st_latest_install.log\" INSTALL_ROOT=\"%programfiles%\\SuperTux\\${versionName}\" TRANSFORMS=\"stmsimod.mst\"`;
             }
             //If the installer isn't MSI or EXE:
             else {
