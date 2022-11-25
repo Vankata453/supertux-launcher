@@ -11,7 +11,7 @@ const msiCreator = new MSICreator({
     exe: 'SuperTux Launcher',
     name: 'SuperTux Launcher',
     manufacturer: 'Vankata453',
-    version: '0.1.0',
+    version: '0.1.1',
 	arch: 'x86',
 	appIconPath: path.resolve(__dirname, '../res/supertux.ico'),
 	

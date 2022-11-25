@@ -1,7 +1,7 @@
 {
   "name": "supertux-launcher",
   "productName": "SuperTux Launcher",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A simple and easy to use SuperTux launcher, featuring all versions of the game.",
   "main": "main.js",
   "scripts": {
